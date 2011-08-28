@@ -55,12 +55,12 @@ module Plucky
 
     def find_each(opts={})
       query = clone.update(opts)
-      query.collection.find(query.criteria.to_hash, query.options.to_hash)
+      query.collection.find(query.criteria.to_query_hash, query.options.to_hash)
     end
 
     def find_one(opts={})
       query = clone.update(opts)
-      query.collection.find_one(query.criteria.to_hash, query.options.to_hash)
+      query.collection.find_one(query.criteria.to_query_hash, query.options.to_hash)
     end
 
     def find(*ids)
@@ -86,7 +86,7 @@ module Plucky
 
     def remove(opts={})
       query = clone.update(opts)
-      query.collection.remove(query.criteria.to_hash)
+      query.collection.remove(query.criteria.to_query_hash)
     end
 
     def count(opts={})
@@ -99,7 +99,7 @@ module Plucky
 
     def distinct(key, opts = {})
       query = clone.update(opts)
-      query.collection.distinct(key, query.criteria.to_hash)
+      query.collection.distinct(key, query.criteria.to_query_hash)
     end
 
     def update(opts={})
@@ -185,11 +185,11 @@ module Plucky
     end
 
     def to_hash
-      criteria.to_hash.merge(options.to_hash)
+      criteria.to_query_hash.merge(options.to_hash)
     end
 
     def explain
-      collection.find(criteria.to_hash, options.to_hash).explain
+      collection.find(criteria.to_query_hash, options.to_hash).explain
     end
 
     def inspect
